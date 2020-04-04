@@ -14,10 +14,17 @@ namespace StaticServer
             {
                 options.Providers.Clear();
                 options.Providers.Add<GzipCompressionProvider>(); // GZIP compression only for test
+                options.EnableForHttps = true;
+            });
+
+            services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+
+                options.Level = System.IO.Compression.CompressionLevel.Fastest;
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, Microsoft.Extensions.Hosting.IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
